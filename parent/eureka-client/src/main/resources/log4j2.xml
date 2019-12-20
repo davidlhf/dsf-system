@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+	<Properties>
+		<Property name="logPath">E:/dsfsys/log</Property>
+	</Properties>
+	
+	<Appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			<!-- <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" /> -->
+			<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss:SSS} [%t] %5p %c{1}.%M:%L - %m%n" />
+		</Console>
+
+		<!-- eureka-client.log -->
+		<RollingFile name="mainAppender" fileName="${logPath}/eureka-client.log" filePattern="${logPath}/eureka-client.log.%d{yyyyMMdd_HHmm}.gz">
+			<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss:SSS} [%t] %5p %c{1}.%M:%L - %m%n"/>
+			<Policies>
+				<SizeBasedTriggeringPolicy size="10 MB" />
+			</Policies>
+			<DefaultRolloverStrategy max="5"/>
+		</RollingFile>
+		<Async name="asyncMain" includeLocation="true">
+			<AppenderRef ref="mainAppender" />
+		</Async>
+
+		<RollingFile name="dbAppender" fileName="${logPath}/db.log" filePattern="${logPath}/db.log.%d{yyyyMMdd_HHmm}.gz">
+			<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss:SSS} [%t] %5p %c{1}.%M:%L - %m%n"/>
+			<Policies>
+				<SizeBasedTriggeringPolicy size="10 MB" />
+			</Policies>
+			<DefaultRolloverStrategy max="5"/>
+		</RollingFile>
+		<Async name="asyncDb" includeLocation="true">
+			<AppenderRef ref="dbAppender" />
+		</Async>
+
+		<!-- framwork.log -->
+		<RollingFile name="framworkAppender" fileName="${logPath}/framwork.log" filePattern="${logPath}/framwork.log.%d{yyyyMMdd_HHmm}.gz">
+			<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss:SSS} [%t] %5p %c{1}.%M:%L - %m%n"/>
+			<Policies>
+				<SizeBasedTriggeringPolicy size="10 MB" />
+			</Policies>
+			<DefaultRolloverStrategy max="5"/>
+		</RollingFile>
+		<Async name="asyncFramwork" includeLocation="true">
+			<AppenderRef ref="framworkAppender" />
+		</Async>
+		
+		<!-- security.log -->
+		<RollingFile name="securityFile" fileName="${logPath}/security.log" filePattern="${logPath}/security.log.%d{yyyyMMdd_HHmm}.gz">
+			<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss:SSS} [%t] %5p %c{1}.%M:%L - %m%n"/>
+			<Policies>
+				<SizeBasedTriggeringPolicy size="5 MB" />
+			</Policies>
+			<DefaultRolloverStrategy max="5"/>
+		</RollingFile>
+		<Async name="asyncSecurity" includeLocation="true">
+			<AppenderRef ref="securityFile" />
+		</Async>
+		
+		<!-- eureka-client-debug.log -->
+		<RollingFile name="frameworkDebug" fileName="${logPath}/eureka-client-debug.log" filePattern="${logPath}/eureka-client-debug.log.%d{yyyyMMdd_HHmm}.gz">
+			<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss:SSS} [%t] %5p %c{1}.%M:%L - %m%n"/>
+			<Policies>
+				<SizeBasedTriggeringPolicy size="10 MB" />
+			</Policies>
+			<DefaultRolloverStrategy max="5"/>
+		</RollingFile>
+		<Async name="debug">
+			<AppenderRef ref="frameworkDebug" />
+		</Async>
+
+		<!-- eureka-client-resp-time.log -->
+		<RollingFile name="common" fileName="${logPath}/common.log" filePattern="${logPath}/common.log.%d{yyyyMMdd_HHmm}.gz">
+			<PatternLayout>
+				<Pattern>%d{yyyy-MM-dd HH:mm:ss:SSS} - %m%n</Pattern>
+			</PatternLayout>
+			<Policies>
+				<SizeBasedTriggeringPolicy size="10 MB" />
+			</Policies>
+			<DefaultRolloverStrategy max="5"/>
+		</RollingFile>
+		<Async name="asyncCommon">
+			<AppenderRef ref="common" />
+		</Async>
+		
+	</Appenders>
+
+	<Loggers>
+
+		<Logger name="db" additivity="false" level="info">
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="asyncDb"/>
+		</Logger>
+		<!--serurity log-->
+		<Logger name="serurity" additivity="false" level="info">
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="asyncSecurity"/>
+		</Logger>
+
+		<!--client normal-->
+		<Logger name="oper" additivity="false" level="info">
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="asyncMain"/>
+		</Logger>
+
+		<!--client normal-->
+		<Logger name="common" additivity="false" level="info">
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="asyncCommon"/>
+		</Logger>
+
+		<Logger name="debug" additivity="false" level="info">
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="debug"/>
+		</Logger>
+
+		<!-- Library loggers -->
+		<Logger name="org.springframework" additivity="false" level="info">
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="asyncFramwork"/>
+		</Logger>
+		
+		<!--过滤掉spring和mybatis的一些无用的DEBUG信息-->
+	    <Logger name="org.mybatis" level="info" additivity="false">
+	      <AppenderRef ref="Console"/>
+			<AppenderRef ref="asyncFramwork"/>
+	    </Logger>
+	    <!--监控系统信息-->
+	    <!--若是additivity设为false，则 子Logger 只会在自己的appender里输出，而不会在 父Logger 的appender里输出。-->
+<!-- 	    <Logger name="org.springframework" level="info" additivity="false"> -->
+<!-- 	      <AppenderRef ref="Console"/> -->
+<!-- 	    </Logger> -->
+	
+	    <Root level="info">
+	      <AppenderRef ref="Console"/>
+	    </Root>
+	</Loggers>
+</Configuration>

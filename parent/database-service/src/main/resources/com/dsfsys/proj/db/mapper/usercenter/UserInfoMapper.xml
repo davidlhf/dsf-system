@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dsfsys.proj.db.mapper.usercenter.UserInfoMapper">
+  <resultMap id="BaseResultMap" type="com.dsfsys.proj.db.entity.usercenter.UserInfo">
+    <id column="serialno" jdbcType="BIGINT" property="serialno" />
+    <id column="uuid" jdbcType="VARCHAR" property="uuid" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="psswd" jdbcType="VARCHAR" property="psswd" />
+    <result column="aliace" jdbcType="VARCHAR" property="aliace" />
+    <result column="gender" jdbcType="INTEGER" property="gender" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="id_code" jdbcType="VARCHAR" property="idCode" />
+    <result column="id_type" jdbcType="INTEGER" property="idType" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="birth" jdbcType="DATE" property="birth" />
+    <result column="last_update_usrid" jdbcType="VARCHAR" property="lastUpdateUsrid" />
+    <result column="last_update_date" jdbcType="TIMESTAMP" property="lastUpdateDate" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="create_usrid" jdbcType="VARCHAR" property="createUsrid" />
+    <result column="version" jdbcType="BIGINT" property="version" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    serialno, uuid, user_name, psswd, aliace, gender, address, phone, id_code, id_type, 
+    email, birth, last_update_usrid, last_update_date, create_date, create_usrid, version
+  </sql>
+  <select id="selectByExample" parameterType="com.dsfsys.proj.db.entity.usercenter.UserInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from user_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="com.dsfsys.proj.db.entity.usercenter.UserInfoKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user_info
+    where serialno = #{serialno,jdbcType=BIGINT}
+      and uuid = #{uuid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.dsfsys.proj.db.entity.usercenter.UserInfoKey">
+    delete from user_info
+    where serialno = #{serialno,jdbcType=BIGINT}
+      and uuid = #{uuid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.dsfsys.proj.db.entity.usercenter.UserInfoExample">
+    delete from user_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.dsfsys.proj.db.entity.usercenter.UserInfo">
+    insert into user_info (serialno, uuid, user_name, 
+      psswd, aliace, gender, 
+      address, phone, id_code, 
+      id_type, email, birth, 
+      last_update_usrid, last_update_date, create_date, 
+      create_usrid, version)
+    values (#{serialno,jdbcType=BIGINT}, #{uuid,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
+      #{psswd,jdbcType=VARCHAR}, #{aliace,jdbcType=VARCHAR}, #{gender,jdbcType=INTEGER}, 
+      #{address,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{idCode,jdbcType=VARCHAR}, 
+      #{idType,jdbcType=INTEGER}, #{email,jdbcType=VARCHAR}, #{birth,jdbcType=DATE}, 
+      #{lastUpdateUsrid,jdbcType=VARCHAR}, #{lastUpdateDate,jdbcType=TIMESTAMP}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{createUsrid,jdbcType=VARCHAR}, #{version,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dsfsys.proj.db.entity.usercenter.UserInfo">
+    insert into user_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="serialno != null">
+        serialno,
+      </if>
+      <if test="uuid != null">
+        uuid,
+      </if>
+      <if test="userName != null">
+        user_name,
+      </if>
+      <if test="psswd != null">
+        psswd,
+      </if>
+      <if test="aliace != null">
+        aliace,
+      </if>
+      <if test="gender != null">
+        gender,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="idCode != null">
+        id_code,
+      </if>
+      <if test="idType != null">
+        id_type,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="birth != null">
+        birth,
+      </if>
+      <if test="lastUpdateUsrid != null">
+        last_update_usrid,
+      </if>
+      <if test="lastUpdateDate != null">
+        last_update_date,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="createUsrid != null">
+        create_usrid,
+      </if>
+      <if test="version != null">
+        version,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="serialno != null">
+        #{serialno,jdbcType=BIGINT},
+      </if>
+      <if test="uuid != null">
+        #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="psswd != null">
+        #{psswd,jdbcType=VARCHAR},
+      </if>
+      <if test="aliace != null">
+        #{aliace,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        #{gender,jdbcType=INTEGER},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="idCode != null">
+        #{idCode,jdbcType=VARCHAR},
+      </if>
+      <if test="idType != null">
+        #{idType,jdbcType=INTEGER},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="birth != null">
+        #{birth,jdbcType=DATE},
+      </if>
+      <if test="lastUpdateUsrid != null">
+        #{lastUpdateUsrid,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDate != null">
+        #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUsrid != null">
+        #{createUsrid,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.dsfsys.proj.db.entity.usercenter.UserInfoExample" resultType="java.lang.Long">
+    select count(*) from user_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update user_info
+    <set>
+      <if test="record.serialno != null">
+        serialno = #{record.serialno,jdbcType=BIGINT},
+      </if>
+      <if test="record.uuid != null">
+        uuid = #{record.uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userName != null">
+        user_name = #{record.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.psswd != null">
+        psswd = #{record.psswd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.aliace != null">
+        aliace = #{record.aliace,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gender != null">
+        gender = #{record.gender,jdbcType=INTEGER},
+      </if>
+      <if test="record.address != null">
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null">
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idCode != null">
+        id_code = #{record.idCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idType != null">
+        id_type = #{record.idType,jdbcType=INTEGER},
+      </if>
+      <if test="record.email != null">
+        email = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.birth != null">
+        birth = #{record.birth,jdbcType=DATE},
+      </if>
+      <if test="record.lastUpdateUsrid != null">
+        last_update_usrid = #{record.lastUpdateUsrid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lastUpdateDate != null">
+        last_update_date = #{record.lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createDate != null">
+        create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createUsrid != null">
+        create_usrid = #{record.createUsrid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.version != null">
+        version = #{record.version,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update user_info
+    set serialno = #{record.serialno,jdbcType=BIGINT},
+      uuid = #{record.uuid,jdbcType=VARCHAR},
+      user_name = #{record.userName,jdbcType=VARCHAR},
+      psswd = #{record.psswd,jdbcType=VARCHAR},
+      aliace = #{record.aliace,jdbcType=VARCHAR},
+      gender = #{record.gender,jdbcType=INTEGER},
+      address = #{record.address,jdbcType=VARCHAR},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      id_code = #{record.idCode,jdbcType=VARCHAR},
+      id_type = #{record.idType,jdbcType=INTEGER},
+      email = #{record.email,jdbcType=VARCHAR},
+      birth = #{record.birth,jdbcType=DATE},
+      last_update_usrid = #{record.lastUpdateUsrid,jdbcType=VARCHAR},
+      last_update_date = #{record.lastUpdateDate,jdbcType=TIMESTAMP},
+      create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      create_usrid = #{record.createUsrid,jdbcType=VARCHAR},
+      version = #{record.version,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dsfsys.proj.db.entity.usercenter.UserInfo">
+    update user_info
+    <set>
+      <if test="userName != null">
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="psswd != null">
+        psswd = #{psswd,jdbcType=VARCHAR},
+      </if>
+      <if test="aliace != null">
+        aliace = #{aliace,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        gender = #{gender,jdbcType=INTEGER},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="idCode != null">
+        id_code = #{idCode,jdbcType=VARCHAR},
+      </if>
+      <if test="idType != null">
+        id_type = #{idType,jdbcType=INTEGER},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="birth != null">
+        birth = #{birth,jdbcType=DATE},
+      </if>
+      <if test="lastUpdateUsrid != null">
+        last_update_usrid = #{lastUpdateUsrid,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDate != null">
+        last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUsrid != null">
+        create_usrid = #{createUsrid,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null">
+        version = #{version,jdbcType=BIGINT},
+      </if>
+    </set>
+    where serialno = #{serialno,jdbcType=BIGINT}
+      and uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dsfsys.proj.db.entity.usercenter.UserInfo">
+    update user_info
+    set user_name = #{userName,jdbcType=VARCHAR},
+      psswd = #{psswd,jdbcType=VARCHAR},
+      aliace = #{aliace,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=INTEGER},
+      address = #{address,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      id_code = #{idCode,jdbcType=VARCHAR},
+      id_type = #{idType,jdbcType=INTEGER},
+      email = #{email,jdbcType=VARCHAR},
+      birth = #{birth,jdbcType=DATE},
+      last_update_usrid = #{lastUpdateUsrid,jdbcType=VARCHAR},
+      last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      create_usrid = #{createUsrid,jdbcType=VARCHAR},
+      version = #{version,jdbcType=BIGINT}
+    where serialno = #{serialno,jdbcType=BIGINT}
+      and uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+</mapper>

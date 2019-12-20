@@ -1,0 +1,33 @@
+server:
+  port: 8761
+  
+eureka:
+  environment: dev
+  instance:
+    hostname: eureka-center1
+    instance-id: ${spring.cloud.client.hostname}:${server.port}
+    prefer-ip-address: true
+  client:
+    #声明自己是个服务端
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+#  server:
+#    enable-self-preservation: false
+
+spring:
+  application:
+    name: eurka-server
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+info:
+  application.name: springcloud-microservice-eurekasever1
+  company.name: xxx
+  build.artifactId: $project.artifactId$
+  build.version:  $project.version$
